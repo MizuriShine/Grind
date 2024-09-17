@@ -19,6 +19,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IPageRepository, PageRepository>();
+
+builder.Services.AddScoped<PageService>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
