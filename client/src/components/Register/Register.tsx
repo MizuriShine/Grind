@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-
 import styles from './Register.module.css';
+import { useAppDispatch } from '../../store/hooks';
+import { loginSuccess } from '../../store/slices/authSlice';
 
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -10,14 +11,14 @@ const Register: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
+    const dispatch = useAppDispatch();
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (password !== confirmPassword) {
             setErrorMessage("Passwords do not match");
             return;
         }
-
-        console.log('API base URL: ', apiBaseUrl);
 
         const response = await fetch(`${apiBaseUrl}/api/user/register`, {
             method: 'POST',
@@ -32,9 +33,12 @@ const Register: React.FC = () => {
 
         if (response.ok) {
             setErrorMessage('');
+            // const data = await response.json();
+            dispatch(loginSuccess());
             alert('Registration successful');
         } else {
-            setErrorMessage('Registration failed');
+            const errorData = await response.json();
+            setErrorMessage(errorData.message || 'Registration failed');
         }
     };
 

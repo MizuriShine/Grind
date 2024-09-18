@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-
 import styles from './Login.module.css';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../store/hooks';
+import { loginSuccess } from '../../store/slices/authSlice';
 
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -9,10 +11,11 @@ const Login: React.FC = () => {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        console.log('API base URL: ', apiBaseUrl);
 
         const response = await fetch(`${apiBaseUrl}/api/user/login`, {
             method: 'POST',
@@ -27,7 +30,9 @@ const Login: React.FC = () => {
 
         if (response.ok) {
             setErrorMessage('');
+            dispatch(loginSuccess());
             alert('Login successful');
+            navigate("/");
         } else {
             setErrorMessage('Login failed');
         }
