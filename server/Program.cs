@@ -11,9 +11,11 @@ builder.Services.AddCors(options =>
 {
 	options.AddPolicy("AllowAllOrigins", builder => 
 	{
-		builder.AllowAnyOrigin()
+		builder.WithOrigins("http://localhost:3000")
+			   //.AllowAnyOrigin() - опция AllowCredentials не совместима с данной настройкой
 			   .AllowAnyMethod()
-			   .AllowAnyHeader();
+			   .AllowAnyHeader()
+			   .AllowCredentials();
 	});
 });
 

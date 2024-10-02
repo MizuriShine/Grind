@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './Register.module.css';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../store/hooks';
 import { loginSuccess } from '../../store/slices/authSlice';
 
@@ -11,6 +12,7 @@ const Register: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -22,6 +24,7 @@ const Register: React.FC = () => {
 
         const response = await fetch(`${apiBaseUrl}/api/user/register`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -33,9 +36,8 @@ const Register: React.FC = () => {
 
         if (response.ok) {
             setErrorMessage('');
-            // const data = await response.json();
             dispatch(loginSuccess());
-            alert('Registration successful');
+            navigate("/home");
         } else {
             const errorData = await response.json();
             setErrorMessage(errorData.message || 'Registration failed');

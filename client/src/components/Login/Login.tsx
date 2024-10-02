@@ -19,6 +19,7 @@ const Login: React.FC = () => {
 
         const response = await fetch(`${apiBaseUrl}/api/user/login`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -31,8 +32,7 @@ const Login: React.FC = () => {
         if (response.ok) {
             setErrorMessage('');
             dispatch(loginSuccess());
-            alert('Login successful');
-            navigate("/");
+            navigate("/home");
         } else {
             setErrorMessage('Login failed');
         }

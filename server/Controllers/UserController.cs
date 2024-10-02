@@ -8,11 +8,11 @@ public class UserController : ControllerBase
 	private readonly UserManager<ApplicationUser> _userManager;
 	private readonly SignInManager<ApplicationUser> _signInManager;
 
-    public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
-    {
-        _userManager = userManager;
-        _signInManager = signInManager;
-    }
+	public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+	{
+		_userManager = userManager;
+		_signInManager = signInManager;
+	}
 
 	[HttpPost("register")]
 	public async Task<IActionResult> Register([FromBody] RegisterUserDto dto)
@@ -31,18 +31,18 @@ public class UserController : ControllerBase
 		return BadRequest(result.Errors);
 	}
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginUserDto dto)
-    {
-        if (dto == null)
-            return BadRequest("Invalid client request");
+	[HttpPost("login")]
+	public async Task<IActionResult> Login([FromBody] LoginUserDto dto)
+	{
+		if (dto == null)
+			return BadRequest("Invalid client request");
 
-        var result = await _signInManager.PasswordSignInAsync(dto.Email, dto.Password, dto.RememberMe, lockoutOnFailure: false);
-        if (result.Succeeded)
-            return Ok(new { message = "Login successful" });
+		var result = await _signInManager.PasswordSignInAsync(dto.Email, dto.Password, dto.RememberMe, lockoutOnFailure: false);
+		if (result.Succeeded)
+			return Ok(new { message = "Login successful" });
 
-        return Unauthorized(new { message = "Invalid login attempt" });
-    }
+		return Unauthorized(new { message = "Invalid login attempt" });
+	}
 
 	[HttpPost("logout")]
 	public async Task<IActionResult> Logout()

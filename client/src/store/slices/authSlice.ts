@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -21,8 +21,8 @@ const authSlice = createSlice({
     //   //state.user = action.payload;
     // },
     loginSuccess(state, action: PayloadAction) {
-      console.log("auth!!!");
       state.isAuthenticated = true;
+      console.log("Auth!");
       //state.user = action.payload;
     },
     logout(state) {
@@ -31,6 +31,25 @@ const authSlice = createSlice({
     },
   },
 });
+
+export const checkAuth = createAsyncThunk(
+    'auth/checkAuth',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await fetch('/api/user/check-auth', {
+                credentials: 'include',
+            });
+            if (!response.ok) throw new Error('Not authenticated');
+            return await response.json();
+        } catch (error) {
+            if (error instanceof Error) {
+                return rejectWithValue(error.message);
+            } else {
+                return rejectWithValue('An unknown error occurred');
+            }
+        }
+    }
+);
 
 export const { loginSuccess, logout } = authSlice.actions;
 
