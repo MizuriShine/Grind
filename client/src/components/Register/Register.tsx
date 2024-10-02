@@ -1,5 +1,5 @@
+import './Register.css';
 import React, { useState } from 'react';
-import styles from './Register.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../store/hooks';
 import { loginSuccess } from '../../store/slices/authSlice';
@@ -45,13 +45,13 @@ const Register: React.FC = () => {
     };
 
     return (
-        <div className={styles.container}>
+        <div className='container'>
             <h2>Register</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Email:</label>
                     <input
-                        className={styles.input}
+                        className='input'
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -61,7 +61,7 @@ const Register: React.FC = () => {
                 <div>
                     <label>Password:</label>
                     <input
-                        className={styles.input}
+                        className='input'
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -71,7 +71,7 @@ const Register: React.FC = () => {
                 <div>
                     <label>Confirm Password:</label>
                     <input
-                        className={styles.input}
+                        className='input'
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
@@ -79,7 +79,7 @@ const Register: React.FC = () => {
                     />
                 </div>
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                <button className={styles.button} type="submit">Register</button>
+                <button className='button' type="submit">Register</button>
             </form>
         </div>
     );

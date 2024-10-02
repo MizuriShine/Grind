@@ -1,5 +1,5 @@
+import './Login.css';
 import React, { useState } from 'react';
-import styles from './Login.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../store/hooks';
 import { loginSuccess } from '../../store/slices/authSlice';
@@ -39,13 +39,13 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className={styles.container}>
+        <div className='container'>
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Email:</label>
                     <input
-                        className={styles.input}
+                        className='input'
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -55,7 +55,7 @@ const Login: React.FC = () => {
                 <div>
                     <label>Password:</label>
                     <input
-                        className={styles.input}
+                        className='input'
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -63,7 +63,7 @@ const Login: React.FC = () => {
                     />
                 </div>
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                <button className={styles.button} type="submit">Login</button>
+                <button className='button' type="submit">Login</button>
             </form>
         </div>
     );
