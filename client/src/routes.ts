@@ -1,24 +1,27 @@
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
-import Home from "./pages/Home";
+import Home from "./layouts/Home";
 
-export const routes = [
+export const routesConfig = [
   {
     title: 'Register',
     path: '/register',
-    component: Register,
-    requiresAuth: false
+    layout: Register,
+    requiresAuth: false,
+    showSidebar: false
   },
   {
     path: '/login',
     title: 'Login',
-    component: Login,
-    requiresAuth: false
+    layout: Login,
+    requiresAuth: false,
+    showSidebar: false
   },
   {
     title: 'Home',
     path: '/',
-    component: Home,
-    requiresAuth: true
+    layout: Home,
+    requiresAuth: true,
+    showSidebar: true
   }
 ];
