@@ -6,7 +6,7 @@ import { loginSuccess } from '../../store/slices/authSlice';
 
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
-const Register: React.FC = () => {
+function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');

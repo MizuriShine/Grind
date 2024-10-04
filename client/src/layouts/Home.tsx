@@ -1,7 +1,6 @@
-import React from 'react';
 import { useAppSelector } from '../store/hooks';
 
-const Home: React.FC = () => {
+function Home() {
     const auth = useAppSelector((state) => state.auth);
 
     return (

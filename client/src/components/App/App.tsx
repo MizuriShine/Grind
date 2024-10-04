@@ -1,32 +1,29 @@
 import '../../components/App/App.css';
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Register from '../../components/Register/Register';
-import Login from '../../components/Login/Login';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import { routes } from '../../routes';
+import { PrimeReactProvider } from 'primereact/api';
 import ProtectedRoute from '../../components/ProtectedRoute';
-import Home from '../../pages/Home';
 
-const App: React.FC = () => {
-  const routes = [
-    <Route path="/register" element={<Register />} />,
-    <Route path="/login" element={<Login />} />
-  ];
+function App() {
+  const getRoutes = () =>
+    routes.map((route: any) => {
+      if (route?.requiresAuth) {
+        return <Route path={route?.path} element={<ProtectedRoute>{route?.layout()}</ProtectedRoute>} key={route?.key} />;
+      }
+      else {
+        return <Route path={route?.path} element={route?.layout()} key={route?.key} />;
+      }
+    });
 
   return (
-    <div className='app'>
-      <div className='container'>
-        <Router>
-          <Routes>
-            {routes}
-            <Route path="/" element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            } />
-          </Routes>
-        </Router>
-      </div>
-    </div >
+    <PrimeReactProvider>
+      <div className='app'>
+        <Routes>
+          {getRoutes()}
+          <Route path='*' element={<Navigate to='/home' />} />;
+        </Routes>
+      </div >
+    </PrimeReactProvider>
   );
 };
 

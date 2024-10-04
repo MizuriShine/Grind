@@ -1,6 +1,4 @@
-
-
-const Sidebar: React.FC = () => {
+function Sidebar() {
     return (
         <div>
             Hello?
